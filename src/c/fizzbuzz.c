@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 
-void fizz_buzz(int n){
+inline void fizz_buzz(int n){
     if (!(n % 15)){
 	printf("fizzbuzz\n");
 	return;
@@ -21,7 +21,5 @@ void fizz_buzz(int n){
 
 int main(){
     int n;
-    for (n = 0;n <= 100;n++){
-	fizz_buzz(n);
-    }
+    for (n = 0;n <= 100;fizz_buzz(n++));
 }
