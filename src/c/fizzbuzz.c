@@ -4,22 +4,10 @@
 
 #include <stdio.h>
 
-inline void fizz_buzz(int n){
-    if (!(n % 15)){
-	printf("fizzbuzz\n");
-	return;
-    } else if (!(n % 3)){
-	printf("fizz\n");
-	return;
-    } else if (!(n % 5)){
-	printf("buzz\n");
-	return;
-    } else {
-	printf("%i\n",n);
-    }
-}
-
 int main(){
     int n;
-    for (n = 0;n <= 100;fizz_buzz(n++));
+    for (n = 0;n <= 100;((!(n % 15)) ? 
+			 puts("fizzbuzz") : (!(n % 3)) ?
+			 puts("fizz") : (!(n % 5)) ?
+			 puts("buzz") : printf("%i\n",n)), n++);
 }
