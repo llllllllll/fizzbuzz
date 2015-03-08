@@ -5,7 +5,8 @@
 
 main :: IO ()
 main = putStr $ concatMap fizz_buzz [1..100]
-      
+
+
 fizz_buzz :: Int -> String
 fizz_buzz n
     | n `rem` 15 == 0 = "fizzbuzz\n"
