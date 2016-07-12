@@ -1,6 +1,6 @@
-#include<iostream>
-#include<tuple>
-#include<utility>
+#include <iostream>
+#include <tuple>
+#include <utility>
 
 constexpr std::size_t max_fizzbuzz = 100;
 
@@ -89,9 +89,10 @@ struct fizzbuzzer<max_fizzbuzz> {
 };
 
 template<char... cs>
-auto to_array(char_sequence<cs...>) {
+constexpr auto to_array(char_sequence<cs...>) {
     return std::array<char, sizeof...(cs) + 1> {cs..., '\0'};
 }
+
 
 int main() {
     std::cout << to_array(fizzbuzzer<1>::value).data();
