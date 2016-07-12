@@ -10,14 +10,14 @@ using char_sequence = std::integer_sequence<char, cs...>;
 template<char... cs, char... ds>
 constexpr auto _cat(char_sequence<cs...>,
                     char_sequence<ds...>) {
-    return char_sequence<cs..., ds...>();
+    return char_sequence<cs..., ds...>{};
 };
 
 template<char... cs, char... ds, char... es>
 constexpr auto _cat(char_sequence<cs...>,
                     char_sequence<ds...>,
                     char_sequence<es...>) {
-    return char_sequence<cs..., ds..., es...>();
+    return char_sequence<cs..., ds..., es...>{};
 }
 
 template<typename... Ts>
@@ -39,14 +39,14 @@ template<bool p, typename T, typename F>
 using if_t = typename if_<p, T, F>::type;
 
 struct nil {
-    constexpr static auto value = char_sequence<>();
+    constexpr static auto value = char_sequence<>{};
 };
 
 template<std::size_t n>
 struct itoa {
     constexpr static auto value = cat(
         if_t<n >= 10, itoa<n / 10>, nil>::value,
-        char_sequence<((char) ('0' + (n % 10)))>());
+        char_sequence<((char) ('0' + (n % 10)))>{});
 };
 
 template<int m3, int m5, std::size_t n>
@@ -57,17 +57,17 @@ struct _fizzbuzz {
 template<std::size_t n>
 struct _fizzbuzz<0, 0, n> {
     constexpr static auto value = char_sequence<'f', 'i', 'z', 'z',
-                                                'b', 'u', 'z', 'z'>();
+                                                'b', 'u', 'z', 'z'>{};
 };
 
 template<int m5, std::size_t n>
 struct _fizzbuzz<0, m5, n> {
-    constexpr static auto value = char_sequence<'f', 'i', 'z', 'z'>();
+    constexpr static auto value = char_sequence<'f', 'i', 'z', 'z'>{};
 };
 
 template<int m3, std::size_t n>
 struct _fizzbuzz<m3, 0, n> {
-    constexpr static auto value = char_sequence<'b', 'u', 'z', 'z'>();
+    constexpr static auto value = char_sequence<'b', 'u', 'z', 'z'>{};
 };
 
 template<std::size_t n>
@@ -78,21 +78,20 @@ struct fizzbuzz {
 template<std::size_t n>
 struct fizzbuzzer {
     constexpr static auto value = cat(fizzbuzz<n>::value,
-                                      char_sequence<'\n'>(),
+                                      char_sequence<'\n'>{},
                                       fizzbuzzer<n + 1>::value);
 };
 
 template<>
 struct fizzbuzzer<max_fizzbuzz> {
     constexpr static auto value = cat(fizzbuzz<max_fizzbuzz>::value,
-                                      char_sequence<'\n'>());
+                                      char_sequence<'\n'>{});
 };
 
 template<char... cs>
 constexpr auto to_array(char_sequence<cs...>) {
     return std::array<char, sizeof...(cs) + 1> {cs..., '\0'};
 }
-
 
 int main() {
     std::cout << to_array(fizzbuzzer<1>::value).data();
